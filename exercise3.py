@@ -1,17 +1,10 @@
 def max_distinct_gifts(arr):
-    table_indices = {}
-    max_gits = 0
-    start_index = 0
+    gift_index = {}
+    start = max_distinct = 0
 
-    for i in range(len(arr)):
-        gift = arr[i]
+    for end, gift in enumerate(arr):
+        start = max(start, gift_index.get(gift, 0) + 1)
+        gift_index[gift] = end
+        max_distinct = max(max_distinct, end - start + 1)
 
-        if gift in table_indices and table_indices[gift] >= start_index:
-
-            start_index = table_indices[gift] + 1
-
-            table_indices[gift] = i
-
-            max_gifts = max(max_gifts, i - start_index + 1)
-
-            return max_gifts
+    return max_distinct
