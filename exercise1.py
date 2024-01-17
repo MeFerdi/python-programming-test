@@ -1,11 +1,5 @@
-from collections import Counter
+from statistics import multimode
 
-def find_modes(1st)
-
-counter = Counter(1st)
-
-max_count = max(counter.value())#Finding maximum count
-
-modes = [key for key, value in counter.items() if value == max_count]#getting all elements with maximum count
-
-return modes
+def find_modes(lst):
+    modes = multimode(lst)
+    return modes, lst.count(modes[0]) if modes else 0
