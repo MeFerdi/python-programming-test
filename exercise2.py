@@ -1,11 +1,10 @@
 import re
 
 def find_single_valid_number(line):
-    
-    match = re.match(r"^\s*([-+]?\d*\.\d+|[-+]?\d+)\s*$", line)
-    
+      match = re.match(r"^\s*([-+]?\d+\.?\d*(?:[eE][-+]?\d+)?)\s*$", line)
     if match:
-        return float(match.group(1))
+        number = match.group(1)
+        return int(number) if '.' not in number and 'e' not in number.lower() else float(number)
     else:
         return None
 
@@ -14,10 +13,9 @@ def extract_numbers_from_file(filename):
 
     with open(filename, 'r') as file:
         for line in file:
-        
             number = find_single_valid_number(line)
             
-            # Add the valid number to the list
+            # Adding the valid number to the list
             if number is not None:
                 numbers.append(number)
 
