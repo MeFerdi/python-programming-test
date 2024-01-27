@@ -1,23 +1,20 @@
-def min_tables_to_grab_gifts(gifts):
-    gift_positions = {}
-    max_gift_count = 0
-    start_table = 0
-    end_table = 0
+def getDistinctElements(A):
+    return list(set(A))
 
-    current_start = 0
-    current_gift_count = 0
+def getSubarray(A, start, end):
+    return A[start - 1:end]
 
-    for i, gift in enumerate(gifts):
-        if gift in gift_positions and gift_positions[gift] >= current_start:
-            current_start = gift_positions[gift] + 1
-            current_gift_count = i - current_start
+def isArrayContained(A, B):
+    return all(elem in A for elem in B)
 
-        gift_positions[gift] = i
-        current_gift_count += 1
+def minTablesToGrabDistinctGifts(A):
+    min_tables = float('inf')
+    distinct_gifts = getDistinctElements(A)
 
-        if current_gift_count > max_gift_count:
-            max_gift_count = current_gift_count
-            start_table = current_start
-            end_table = i
+    for i in range(len(A)):
+        for j in range(i, len(A)):
+            subarray = getSubarray(A, i + 1, j + 1)
+            if len(getDistinctElements(subarray)) == len(distinct_gifts) and isArrayContained(subarray, distinct_gifts):
+                min_tables = min(min_tables, j - i + 1)
 
-    return start_table, end_table, gifts[start_table:end_table+1]
+    return min_tables
